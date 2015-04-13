@@ -42,5 +42,25 @@ namespace TeamCitySharp.ActionTypes
             return changes.FirstOrDefault();
         }
 
+        //TODO: Fix Issues
+        public List<Change> ByBuildConfigIdAndBuildNumber(string buildConfigId, string buildNumber)
+        {
+            var changeWrapper = _caller.GetFormat<ChangeWrapper>("/app/rest/changes/buildType:(id:{0}),build:(number:{1})", buildConfigId, buildNumber);
+
+            return changeWrapper.Change;
+        }
+
+        public List<Change> ByBuildId(string buildId)
+        {
+            var changeWrapper = _caller.GetFormat<ChangeWrapper>("/app/rest/changes?build=id:{0}", buildId);
+
+            var changeList = new List<Change>();
+
+            if (changeWrapper.Change == null) return changeList;
+
+            changeList.AddRange(changeWrapper.Change.Select(change => ByChangeId(change.Id)));
+
+            return changeList;
+        }
     }
 }

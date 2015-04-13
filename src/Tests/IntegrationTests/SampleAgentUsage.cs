@@ -15,8 +15,8 @@ namespace TeamCitySharp.IntegrationTests
         [SetUp]
         public void SetUp()
         {
-            _client = new TeamCityClient("teamcity.codebetter.com");
-            _client.Connect("teamcitysharpuser", "qwerty");
+            _client = new TeamCityClient("limapedev41:8080");
+            _client.Connect("admin", "123");
         }
 
         [Test]
@@ -24,8 +24,6 @@ namespace TeamCitySharp.IntegrationTests
         public void it_throws_exception_when_no_host()
         {
             var client = new TeamCityClient(null);
-
-            //Assert: Exception
         }
 
         [Test]
@@ -36,8 +34,6 @@ namespace TeamCitySharp.IntegrationTests
             client.Connect("teamcitysharpuser", "qwerty");
 
             var agents = client.Agents.All();
-
-            //Assert: Exception
         }
 
         [Test]
@@ -47,8 +43,6 @@ namespace TeamCitySharp.IntegrationTests
             var client = new TeamCityClient("teamcity.codebetter.com");
 
             var agents = client.Agents.All();
-
-            //Assert: Exception
         }
 
         [Test]
@@ -59,7 +53,7 @@ namespace TeamCitySharp.IntegrationTests
             Assert.That(agents.Any(), "No agents were found");
         }
 
-        [TestCase("agent01")]
+        [TestCase("LIMAPEDEV41")]
         public void it_returns_last_build_status_for_agent(string agentName)
         {
             Build lastBuild = _client.Builds.LastBuildByAgent(agentName);

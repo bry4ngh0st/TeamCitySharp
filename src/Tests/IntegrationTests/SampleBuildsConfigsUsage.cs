@@ -14,8 +14,8 @@ namespace TeamCitySharp.IntegrationTests
         [SetUp]
         public void SetUp()
         {
-            _client = new TeamCityClient("teamcity.codebetter.com");
-            _client.Connect("teamcitysharpuser", "qwerty");
+            _client = new TeamCityClient("limapedev41:8080");
+            _client.Connect("admin", "123");
         }
 
         [Test]
@@ -61,7 +61,7 @@ namespace TeamCitySharp.IntegrationTests
         [Test]
         public void it_returns_build_config_details_by_configuration_id()
         {
-            string buildConfigId = "bt437";
+            string buildConfigId = "DirecTv_Releases_20151000";
             var buildConfig = _client.BuildConfigs.ByConfigurationId(buildConfigId);
 
             Assert.That(buildConfig != null, "Cannot find a build type for that buildId");
@@ -99,7 +99,7 @@ namespace TeamCitySharp.IntegrationTests
         [Test]
         public void it_returns_build_configs_by_project_id()
         {
-            string projectId = "project137";
+            string projectId = "DirecTv_Releases";
             var buildConfigs = _client.BuildConfigs.ByProjectId(projectId);
 
             Assert.That(buildConfigs.Any(), "Cannot find a build type for that projectId");
@@ -108,7 +108,7 @@ namespace TeamCitySharp.IntegrationTests
         [Test]
         public void it_returns_build_configs_by_project_name()
         {
-            string projectName = "YouTrackSharp";
+            string projectName = "RELEASES";
             var buildConfigs = _client.BuildConfigs.ByProjectName(projectName);
 
             Assert.That(buildConfigs.Any(), "Cannot find a build type for that projectName");

@@ -18,6 +18,7 @@ namespace TeamCitySharp.ActionTypes
         List<BuildConfig> ByProjectId(string projectId);
         List<BuildConfig> ByProjectName(string projectName);
         BuildConfig CreateConfiguration(string projectName, string configurationName);
+        BuildConfig CreateConfigurationByProjectId(string projectId, string configurationName);
 
         void SetConfigurationSetting(BuildTypeLocator locator, string settingName, string settingValue);
         bool GetConfigurationPauseStatus(BuildTypeLocator locator);

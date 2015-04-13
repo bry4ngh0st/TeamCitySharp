@@ -11,14 +11,14 @@ namespace TeamCitySharp.IntegrationTests
         [SetUp]
         public void SetUp()
         {
-            _client = new TeamCityClient("localhost:81");
-           
+            _client = new TeamCityClient("limapedev41:8080");
+            _client.Connect("admin", "123");
         }
 
         [Test]
         public void it_will_authenticate_a_known_user()
         {
-            _client.Connect("admin", "qwerty");
+            _client.Connect("admin", "123");
             
             Assert.That(_client.Authenticate());
         }
@@ -29,8 +29,6 @@ namespace TeamCitySharp.IntegrationTests
         {
             _client.Connect("smithy", "smithy");
             _client.Authenticate();
-
-            //Assert.Throws Exception
         }
 
     }

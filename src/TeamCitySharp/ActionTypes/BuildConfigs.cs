@@ -85,6 +85,11 @@ namespace TeamCitySharp.ActionTypes
             return _caller.PostFormat<BuildConfig>(configurationName, HttpContentTypes.TextPlain, HttpContentTypes.ApplicationJson, "/app/rest/projects/name:{0}/buildTypes", projectName);
         }
 
+        public BuildConfig CreateConfigurationByProjectId(string projectId, string configurationName)
+        {
+            return _caller.PostFormat<BuildConfig>(configurationName, HttpContentTypes.TextPlain, HttpContentTypes.ApplicationJson, "/app/rest/projects/id:{0}/buildTypes", projectId);
+        }
+
         public void SetConfigurationSetting(BuildTypeLocator locator, string settingName, string settingValue)
         {
             _caller.PutFormat(settingValue, HttpContentTypes.TextPlain, "/app/rest/buildTypes/{0}/settings/{1}", locator, settingName);

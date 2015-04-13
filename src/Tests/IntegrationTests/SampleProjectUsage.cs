@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using NUnit.Framework;
 using TeamCitySharp.DomainEntities;
+using TeamCitySharp.Locators;
 
 namespace TeamCitySharp.IntegrationTests
 {
@@ -15,8 +16,8 @@ namespace TeamCitySharp.IntegrationTests
         [SetUp]
         public void SetUp()
         {
-            _client = new TeamCityClient("teamcity.codebetter.com");
-            _client.Connect("teamcitysharpuser", "qwerty");
+            _client = new TeamCityClient("limapedev41:8080");
+            _client.Connect("admin", "123");
         }
 
         [Test]
@@ -35,7 +36,7 @@ namespace TeamCitySharp.IntegrationTests
             var client = new TeamCityClient("test:81");
             client.Connect("admin", "qwerty");
 
-            var allProjects = client.Projects.All();             
+            var allProjects = client.Projects.All();
 
             //Assert: Exception
         }
@@ -93,9 +94,26 @@ namespace TeamCitySharp.IntegrationTests
             client.Connect("admin", "qwerty");
             var projectName = Guid.NewGuid().ToString("N");
             var project = client.Projects.Create(projectName);
-            
+
             Assert.That(project, Is.Not.Null);
             Assert.That(project.Name, Is.EqualTo(projectName));
+        }
+
+        [Test]
+        public void CreateProjectTest()
+        {
+            //_client.Projects.Create("DirecTv");
+            /*_client.Projects.Create("DEV", "DirecTv");
+            _client.Projects.Create("RELEASES", "DirecTv");*/
+            _client.Projects.Create("Dev_2015.10.00", "DirecTv_Dev");
+            _client.Projects.Create("Releases_2015.10.00", "DirecTv_Releases");
+        }
+
+        [Test]
+        public void BuildConfigurationTest()
+        {
+            var projectId = "OS_GetOrder_Dev";
+            var buildConfig = _client.BuildConfigs.CreateConfigurationByProjectId(projectId, "Second");
         }
     }
 }

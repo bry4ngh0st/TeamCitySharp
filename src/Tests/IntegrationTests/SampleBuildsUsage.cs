@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Net;
+using System.Runtime.CompilerServices;
 using NUnit.Framework;
 using TeamCitySharp.Locators;
 
@@ -14,8 +15,8 @@ namespace TeamCitySharp.IntegrationTests
         [SetUp]
         public void SetUp()
         {
-            _client = new TeamCityClient("teamcity.codebetter.com");
-            _client.Connect("teamcitysharpuser", "qwerty");
+            _client = new TeamCityClient("limapedev41:8080");
+            _client.Connect("admin", "123");
         }
 
         [Test]
@@ -100,7 +101,7 @@ namespace TeamCitySharp.IntegrationTests
         [Test]
         public void it_returns_all_error_builds_by_config_id()
         {
-            const string buildId = "bt437";
+            const string buildId = "DirecTv_Releases_20151000";
             var builds = _client.Builds.ErrorBuildsByBuildConfigId(buildId);
 
             Assert.That(builds.Any(), "No errored builds have been found");
@@ -180,15 +181,27 @@ namespace TeamCitySharp.IntegrationTests
         [Test]
         public void it_does_not_populate_the_status_text_field_of_the_build_object()
         {
-            const string buildConfigId = "bt5";
-            var client = new TeamCityClient("localhost:81");
-            client.Connect("admin", "qwerty");
+            const string buildConfigId = "DirecTv_Releases_20151000";
 
             var build =
-                client.Builds.ByBuildLocator(BuildLocator.WithDimensions(BuildTypeLocator.WithId(buildConfigId),
-                                                                         maxResults: 1));
+                _client.Builds.ByBuildLocator(BuildLocator.WithDimensions(BuildTypeLocator.WithId(buildConfigId),
+                    maxResults: 1));
+
             Assert.That(build.Count == 1);
             Assert.IsNull(build[0].StatusText);
+        }
+
+        [Test]
+        public void ig_returns_correct_build_when_calling_by_id()
+        {
+            const string buildId = "50";
+            var client = new TeamCityClient("localhost:8080");
+            client.Connect("admin", "123");
+
+            var build = client.Builds.ById(buildId);
+
+            Assert.That(build != null);
+            Assert.That(build.Id == buildId);
         }
     }
 }
